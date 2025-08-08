@@ -166,6 +166,7 @@ export const App = () => {
 
 
     function removeTask(id: string, todolistId: string) {
+
         const tls: TodolistType[] = todolists.map(tdl => {
                 return tdl.todolistId === todolistId
                     ? {
@@ -177,6 +178,7 @@ export const App = () => {
 
             }
         )
+
         setTodolists(tls)
         /*        //достанем нужный массив по todolistId:
                 let todolistTasks = tasks[todolistId];
@@ -187,6 +189,16 @@ export const App = () => {
     }
 
     function addTask(title: string, todolistId: string) {
+        const tls: TodolistType[] = todolists.map(tdl => {
+            return tdl.todolistId === todolistId
+                ? {
+                    ...tdl,
+                    tasks: [{taskId: v1(), title, isDone: false}, ...tdl.tasks]
+                }
+                : tdl
+        })
+        setTodolists(tls)
+
         /*        let task = {id: v1(), title: title, isDone: false};
                 //достанем нужный массив по todolistId:
                 let todolistTasks = tasks[todolistId];
@@ -197,6 +209,20 @@ export const App = () => {
     }
 
     function changeStatus(id: string, isDone: boolean, todolistId: string) {
+
+        const tls: TodolistType[] = todolists.map(tdl => {
+            return todolistId === tdl.todolistId
+                ? {
+                    ...tdl,
+                    tasks: tdl.tasks.map(t => {
+                        return t.taskId === id ? {...t, isDone } : t
+
+                    })
+                }
+                : tdl
+        })
+        debugger
+        setTodolists(tls)
         /*        //достанем нужный массив по todolistId:
                 let todolistTasks = tasks[todolistId];
                 // найдём нужную таску:
