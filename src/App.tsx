@@ -236,6 +236,12 @@ export const App = () => {
     }
 
     function changeFilter(value: FilterValuesType, todolistId: string) {
+        let todolist = todolists.find(tl => tl.todolistId === todolistId);
+        if (todolist) {
+            todolist.filter=value
+            setTodolists([...todolists])
+            debugger
+        }
         /*        let todolist = todolists.find(tl => tl.id === todolistId);
                 if (todolist) {
                     todolist.filter = value;
@@ -260,17 +266,17 @@ export const App = () => {
                     let tasksForTodolist = allTodolistTasks;
 
                     if (tl.filter === "active") {
-                        tasksForTodolist = allTodolistTasks.filter(t => t.isDone === false);
+                        allTodolistTasks = allTodolistTasks.filter(t => !t.isDone);
                     }
                     if (tl.filter === "completed") {
-                        tasksForTodolist = allTodolistTasks.filter(t => t.isDone === true);
+                        allTodolistTasks = allTodolistTasks.filter(t => t.isDone);
                     }
 
                     return <Todolist
                         key={tl.todolistId}
                         id={tl.todolistId}
                         title={tl.title}
-                        tasks={tl.tasks}
+                        tasks={allTodolistTasks}
                         removeTask={removeTask}
                         changeFilter={changeFilter}
                         addTask={addTask}
